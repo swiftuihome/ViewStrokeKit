@@ -1,8 +1,14 @@
 # ViewStrokeKit - 视图描边工具
 
-![Swift Version](https://img.shields.io/badge/Swift-5.9+-orange.svg) ![Platform](https://img.shields.io/badge/Platform-iOS%2015+%20%7C%20macOS%2012+%20%7C%20tvOS%2015+%20%7C%20watchOS%208+-lightgrey.svg) ![License](https://img.shields.io/badge/License-MIT-blue.svg) ![SPM Ready](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)
+![Swift Version](https://img.shields.io/badge/Swift-5.9+-orange.svg) ![Platform](https://img.shields.io/badge/Platform-iOS%2016+%20%7C%20macOS%2013+%20%7C%20tvOS%2013+%20%7C%20watchOS%206+-lightgrey.svg) ![License](https://img.shields.io/badge/License-MIT-blue.svg) ![SPM Ready](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)
 
 ViewStrokeKit 是一个轻量级 SwiftUI 视图描边库，提供简单易用的 API 为任意视图添加纯色或渐变色描边效果。
+
+
+
+## 📱效果
+
+<img src="screenshot.png" alt="效果图" style="width: 300px;" />
 
 
 
