@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct ViewStrokeView: View {
+    public init() {}
     public var body: some View {
         VStack {
             Image(systemName: "swift")
