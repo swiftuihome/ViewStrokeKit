@@ -4,19 +4,19 @@
 import SwiftUI
 
 public extension View {
-    func viewStroke(color: Color, width: CGFloat) -> some View {
-        modifier(StrokeModifier(strokeSize: width, strokeColor: color))
+    func viewStroke<S: ShapeStyle>(_ style: S, width: CGFloat) -> some View {
+        modifier(StrokeModifier(strokeStyle: style, strokeSize: width))
     }
 }
 
-public struct StrokeModifier: ViewModifier {
+public struct StrokeModifier<S: ShapeStyle>: ViewModifier {
     private let id = UUID()
+    var strokeStyle: S
     var strokeSize: CGFloat
-    var strokeColor: Color
     
-    public init(strokeSize: CGFloat = 1, strokeColor: Color = .blue) {
+    public init(strokeStyle: S, strokeSize: CGFloat = 1) {
+        self.strokeStyle = strokeStyle
         self.strokeSize = strokeSize
-        self.strokeColor = strokeColor
     }
     
     public func body(content: Content) -> some View {
@@ -24,10 +24,10 @@ public struct StrokeModifier: ViewModifier {
             .padding(strokeSize * 2)
             .background(
                 Rectangle()
-                    .foregroundStyle(strokeColor)
-                    .mask({
+                    .foregroundStyle(strokeStyle)
+                    .mask {
                         outline(context: content)
-                    })
+                    }
             )
     }
     
@@ -36,7 +36,7 @@ public struct StrokeModifier: ViewModifier {
             context.addFilter(.alphaThreshold(min: 0.01))
             context.drawLayer { layer in
                 if let text = context.resolveSymbol(id: id) {
-                    layer.draw(text, at: .init(x: size.width/2, y: size.height/2))
+                    layer.draw(text, at: .init(x: size.width / 2, y: size.height / 2))
                 }
             }
         } symbols: {
