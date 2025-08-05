@@ -1,167 +1,138 @@
-# ViewStrokeKit
+# ViewStrokeKit - 视图描边工具
 
 ![Swift Version](https://img.shields.io/badge/Swift-5.9+-orange.svg) ![Platform](https://img.shields.io/badge/Platform-iOS%2015+%20%7C%20macOS%2012+%20%7C%20tvOS%2015+%20%7C%20watchOS%208+-lightgrey.svg) ![License](https://img.shields.io/badge/License-MIT-blue.svg) ![SPM Ready](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)
 
-ViewStrokeKit 是一个轻量级 SwiftUI 扩展库，专为视图描边效果设计。通过简单的修饰符，即可为任意 SwiftUI 视图添加单层或多层描边效果，完美支持文本、图像等各种视图元素。
+ViewStrokeKit 是一个轻量级 SwiftUI 视图描边库，提供简单易用的 API 为任意视图添加纯色或渐变色描边效果。
 
-## 功能亮点
 
-✨ **一键描边** - 使用 `viewStroke` 修饰符快速添加描边  
-🌈 **多重描边** - 支持叠加多层不同颜色的描边效果  
-🖼 **全视图支持** - 适用于 Text、Image 及自定义视图  
-📱 **全平台适配** - 支持 iOS/macOS/tvOS/watchOS  
-⚡️ **高性能实现** - 基于 SwiftUI 原生 Canvas 实现  
 
-## 安装指南
+## 🌟 特性
+
+- **通用描边支持** - 适用于 Text、Image 及所有 SwiftUI 视图
+- **灵活样式** - 支持 `Color` 和任意 `ShapeStyle`（包括渐变）
+- **多重描边** - 可叠加多层不同样式的描边
+- **高性能实现** - 基于 SwiftUI Canvas 优化渲染
+- **全平台兼容** - 支持 iOS/macOS/tvOS/watchOS
+
+
+
+## 📦 安装
 
 ### Swift Package Manager
 
-1. 在 Xcode 菜单中选择 **File > Add Packages...**
+1. 在 Xcode 中选择 **File > Add Packages...**
 2. 输入仓库地址：`https://github.com/swiftuihome/ViewStrokeKit`
-3. 选择版本规则（推荐选择最新版本）
+3. 选择版本规则（推荐最新版本）
 4. 点击 **Add Package**
 
-或直接在 `Package.swift` 中添加依赖：
+或直接在 `Package.swift` 中添加：
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swiftuihome/ViewStrokeKit.git", from: "1.0.0")
+    .package(url: "https://github.com/swiftuihome/ViewStrokeKit.git", from: "1.1.0")
 ]
 ```
 
-## 使用示例
 
-### 基础描边
 
-```swift
-import ViewStrokeKit
+## 🎨 使用指南
 
-Text("你好，世界！")
-    .font(.title)
-    .foregroundColor(.white)
-    .viewStroke(color: .black, width: 2)
-```
-
-### 多层描边效果
+### 纯色描边
 
 ```swift
-Text("多重描边")
-    .font(.largeTitle)
-    .foregroundColor(.yellow)
-    .viewStroke(color: .red, width: 4)  // 第一层红色描边
-    .viewStroke(color: .black, width: 2) // 第二层黑色描边
-```
+import SwiftUI
 
-### 图像描边
-
-```swift
-Image(systemName: "heart.fill")
-    .font(.system(size: 60))
-    .foregroundColor(.pink)
-    .viewStroke(color: .white, width: 3)
-```
-
-### 完整示例
-
-```swift
 struct ContentView: View {
-    var body: some View {
-        VStack(spacing: 30) {
-            // 单层描边文本
-            Text("SwiftUI")
-                .font(.system(size: 40, weight: .bold))
-                .foregroundColor(.white)
-                .viewStroke(color: .blue, width: 3)
-            
-            // 多层描边文本
-            Text("描边效果")
-                .font(.system(size: 50, weight: .black))
-                .foregroundColor(.yellow)
-                .viewStroke(color: .red, width: 5)
-                .viewStroke(color: .black, width: 2)
-            
-            // 图像描边
+    public var body: some View {
+        VStack {
             Image(systemName: "swift")
+                .foregroundStyle(.white)
                 .font(.system(size: 60))
-                .foregroundColor(.orange)
-                .viewStroke(color: .white, width: 4)
+                .viewStroke(.orange, width: 3)
+            
+            Text("SwiftUI")
+                .foregroundStyle(.cyan)
+                .font(.system(size: 60, weight: .bold))
+                .viewStroke(.white, width: 2)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.gray.gradient)
+        .background(.cyan)
     }
+}
+
+#Preview {
+    ContentView()
 }
 ```
 
-## API 文档
+### 渐变多层描边
 
-### `viewStroke(color:width:)`
+```swift
+import SwiftUI
 
-为视图添加描边效果
+struct ContentView: View {
+    // 渐变色描边（图标）
+    let iconStrokeGradient = LinearGradient(colors: [.yellow, .orange, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
+    
+    // 渐变色描边（文字）
+    let textStrokeGradient = LinearGradient(colors: [.cyan, .purple], startPoint: .leading, endPoint: .trailing)
+    
+    // 实心描边（文字）
+    let textStrokeSolidColor = Color.white
+    
+    public init() {}
+    
+    public var body: some View {
+        VStack {
+            Image(systemName: "swift")
+                .foregroundStyle(.white)
+                .font(.system(size: 60))
+                .viewStroke(iconStrokeGradient, width: 3)
+            
+            Text("SwiftUI")
+                .foregroundStyle(.white)
+                .font(.system(size: 60, weight: .bold))
+                .viewStroke(textStrokeGradient, width: 2)
+                .viewStroke(textStrokeSolidColor, width: 3)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.cyan)
+    }
+}
+
+#Preview {
+    ContentView()
+}
+```
+
+
+
+## 🛠 API 文档
+
+### `viewStroke(_:width:)`
+
+```swift
+func viewStroke<S: ShapeStyle>(_ style: S, width: CGFloat) -> some View
+```
 
 **参数**:
-- `color`: 描边颜色（`Color` 类型）
-- `width`: 描边宽度（`CGFloat` 类型，建议值 1-5）
+- `style`: 描边样式（支持 `Color` 或任意 `ShapeStyle`）
+- `width`: 描边宽度（单位：点）
 
 **返回值**:
 返回应用了描边效果的视图
 
-## 进阶技巧
 
-1. **动态效果**：与动画修饰符结合创建动态描边效果
-   ```swift
-   @State private var strokeWidth: CGFloat = 1
-   
-   Text("动态描边")
-       .viewStroke(color: .purple, width: strokeWidth)
-       .onTapGesture {
-           withAnimation {
-               strokeWidth = strokeWidth == 1 ? 5 : 1
-           }
-       }
-   ```
 
-2. **渐变色描边**：使用 `.overlay` 实现特殊效果
-   ```swift
-   Text("渐变描边")
-       .foregroundColor(.white)
-       .viewStroke(color: .clear, width: 4)
-       .overlay(
-           LinearGradient(colors: [.red, .blue], 
-                         startPoint: .leading, 
-                         endPoint: .trailing)
-               .mask {
-                   Text("渐变描边")
-                       .viewStroke(color: .white, width: 4)
-               }
-       )
-   ```
+## 💡 设计建议
 
-## 常见问题
+1. **最佳宽度范围**：1-5 点（过宽可能影响可读性）
+2. **多重描边顺序**：从外到内依次应用
+3. **渐变描边**：使用 `LinearGradient`、`RadialGradient` 或 `AngularGradient`
+4. **性能优化**：避免在滚动视图中使用过多动态描边
 
-**Q：描边效果在部分视图上显示不完整？**  
-A：请确保目标视图有足够的空间，可通过添加 `padding` 解决：
-```swift
-MyView()
-    .padding(5)  // 为描边留出空间
-    .viewStroke(color: .red, width: 3)
-```
 
-**Q：如何调整描边位置？**  
-A：描边默认居中显示，可通过组合多个修饰符实现偏移效果：
-```swift
-Text("偏移描边")
-    .foregroundColor(.white)
-    .viewStroke(color: .black, width: 3)
-    .offset(x: 2, y: 2)  // 模拟阴影偏移
-```
 
-## 贡献指南
+## 📜 许可证
 
-欢迎通过 Issue 提交问题或 Pull Request 贡献代码。提交前请确保：
-1. 代码通过 SwiftLint 检查
-2. 包含相应的单元测试
-3. 更新文档说明
-
-## 许可证
-
-本项目采用 MIT 开源许可证，详情见 [LICENSE](LICENSE) 文件。
+MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
