@@ -47,6 +47,7 @@ dependencies: [
 
 ```swift
 import SwiftUI
+import ViewStrokeKit
 
 struct ContentView: View {
     public var body: some View {
@@ -75,6 +76,7 @@ struct ContentView: View {
 
 ```swift
 import SwiftUI
+import ViewStrokeKit
 
 struct ContentView: View {
     // 渐变色描边（图标）
